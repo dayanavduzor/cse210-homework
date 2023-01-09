@@ -4,7 +4,7 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello Prep 4, Lists");
+        Console.WriteLine("Prep 4, Lists");
 
         List<int> numbers = new List<int>();
         int number = -1;
@@ -41,7 +41,7 @@ class Program
             if (num > maxNum)
             {
                 // if new number greater than maxNum, maxNum found. 
-                maxNum = number;
+                maxNum = num;
             }
         }
 
