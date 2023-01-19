@@ -1,11 +1,12 @@
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Journal program");  
+        Console.WriteLine("Journal program"); 
 
         string [] prompts = new string[7];
 
@@ -17,14 +18,14 @@ class Program
         prompts[5] = ("What did I learn today from my relationship with God?");
         prompts[6] = ("What blessing comforted me or brought me the most joy today?");
 
-        Random randomNumber = new Random();
-        int number = randomNumber.Next(0,6);
-        string randomPrompt = prompts[number];
         
         int quit = 5;
         int userChoice = -1;
 
-        string journalFileName = "journal.txt"; // global variable for file name, test with journal.txt 
+        string journalFileName = "journal.txt"; // global variable for file name, test with journal.txt
+
+        Entry entry1 = new Entry();  // ------ Class
+        
 
         while (userChoice != quit)
         {
@@ -47,42 +48,40 @@ class Program
             if (userChoice == 1)
             {
                 //---------------------------------------------- write entries: use a class
-                //Show a random prompt from array:
+                //Show the user a random prompt (from a list that you create), and save their response, the prompt, and the date as an Entry.
+                Random randomNumber = new Random();
+                int number = randomNumber.Next(0,6);
+                string randomPrompt = prompts[number];
+
+                ////Show a random prompt from array:-------------
                 Console.WriteLine(randomPrompt);
                 Console.Write("> ");
-                string journalEntry = Console.ReadLine();                
-                //save their response, the prompt, and the date as an Entry.
+                string journalEntry = Console.ReadLine(); 
+
+                ////save their response, the prompt, and the date as an Entry.
+
                 DateTime currentDateTime = DateTime.Now;
                 string date = currentDateTime.ToShortDateString();  //date
 
-                Entry entry1 = new Entry();  //-------------------------------???
+                // Entry entry1 = new Entry();  // ------ Class of line 27
                 entry1._date = date;
                 entry1._prompt = randomPrompt;
                 entry1._entry = journalEntry;
-                entry1.WriteJournal(journalFileName); // calls the function in Entry class and passes the fileName from our main()
 
-                entry1.Display();
-
-                // using (StreamWriter outputFile = File.AppendText(journalFileName)) // to write in file -----(how to use a class here?)
-                // {
-                //     // You can use the $ and include variables just like with Console.WriteLine
-                //       outputFile.WriteLine($"Date: {date} --{randomPrompt}--- {journalEntry}");
-                // } 
+                entry1.Add(); // to list in Entry class
+                
+                //entry1.WriteJournal(journalFileName); // function
+               
                 
             }
             else if (userChoice == 2) //--------------------------Display file:
             {
                 // Iterate through all entries in the journal and display them to the screen.
 
-                string[] lines = System.IO.File.ReadAllLines(journalFileName);
-
-                foreach (string line in lines){
-                    string[] entries = line.Split(",");
-                    foreach (string entry in entries){
-                            string eachEntry = entry;
-                            Console.WriteLine(eachEntry);
-                    }    
+                foreach (string entry in entry1.paragraphs){
+                    Console.WriteLine(entry);
                 }
+
             }
             else if (userChoice == 3)   //--------------------------Load file :
             {
@@ -93,24 +92,35 @@ class Program
                 // string filename = "journal.txt" example;
                 if (journalFileName != fileNameInput){
                     journalFileName = fileNameInput;
-                }
+                } 
                 
-
+                entry1.paragraphs.Clear();
+                using (StreamReader sr = new StreamReader(journalFileName))
+                {
+                    string line;
+                    //Read and display lines from the file until the end of
+                    // the file is reached.
+                    while (( line = sr.ReadLine()) != null)
+                    {
+                        entry1.paragraphs.Add(line);
+                    }
+                }
             }
              else if (userChoice == 4) //----------------------------------- Save entries:
             {
-                // Prompt the user for a filename and then save the current journal 
-                //(the complete list of entries) to that file location.
+                // Prompt the user for a filename and then save the current journal (the complete list of entries) to that file location.
                 Console.Write("Enter the name of a file: ");
                 string fileNameInput = Console.ReadLine();
                 // string filename = "journal.txt" example;
                 if (journalFileName != fileNameInput){
                     journalFileName = fileNameInput;
-                    using (StreamWriter outputFile = File.AppendText(journalFileName)) // to write in file
+                    using (StreamWriter outputFile = new StreamWriter(journalFileName))
                     {
-                       // outputFile.WriteLine($"Date: {date} --{randomPrompt}--- {journalEntry}"); //  ------ a class here?
-                    }  
-                }
+                        foreach (string entry in entry1.paragraphs){
+                            outputFile.WriteLine(entry);
+                        }
+
+                    }
             }
             else
             {   
