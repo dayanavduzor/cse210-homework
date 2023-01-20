@@ -78,7 +78,8 @@ class Program
             {
                 // Iterate through all entries in the journal and display them to the screen.
 
-                foreach (string entry in entry1.paragraphs){
+                foreach (string entry in entry1.paragraphs)
+                {
                     Console.WriteLine(entry);
                 }
 
@@ -90,7 +91,8 @@ class Program
                 Console.Write("Enter the name of a file: ");
                 string fileNameInput = Console.ReadLine();
                 // string filename = "journal.txt" example;
-                if (journalFileName != fileNameInput){
+                if (journalFileName != fileNameInput)
+                {
                     journalFileName = fileNameInput;
                 } 
                 
@@ -106,30 +108,43 @@ class Program
                     }
                 }
             }
-             else if (userChoice == 4) //----------------------------------- Save entries:
+            else if (userChoice == 4) //----------------------------------- Save entries:
             {
                 // Prompt the user for a filename and then save the current journal (the complete list of entries) to that file location.
                 Console.Write("Enter the name of a file: ");
                 string fileNameInput = Console.ReadLine();
-                // string filename = "journal.txt" example;
-                if (journalFileName != fileNameInput){
+                
+                if (journalFileName != fileNameInput)
+                {
                     journalFileName = fileNameInput;
                     using (StreamWriter outputFile = new StreamWriter(journalFileName))
                     {
-                        foreach (string entry in entry1.paragraphs){
+                        foreach (string entry in entry1.paragraphs)
+                        {
                             outputFile.WriteLine(entry);
                         }
-
                     }
+                }
+                else if (journalFileName == "journal.txt")
+                {
+                    using (StreamWriter outputFile = new StreamWriter(journalFileName))
+                    {
+                        foreach (string entry in entry1.paragraphs)
+                        {
+                            outputFile.WriteLine(entry);
+                        }
+                    }
+
+                }
             }
             else
             {   
                 Console.WriteLine("Goodbye:"); // code here
-    
-            }
-        }
+                Console.WriteLine("Journal program closed");
         
-        Console.WriteLine("Journal program closed");
-        Console.WriteLine();
+            }
+            
+            Console.WriteLine();
+        }
     }
 }
