@@ -66,7 +66,7 @@ class Program
                 entry1._prompt = randomPrompt;
                 entry1._entry = journalEntry;
 
-                entry1.Add(); // to list in Entry class   
+                entry1.Add(); // add to list in Entry class   
                 
             }
             else if (userChoice == 2) //--------------------------Display file:
