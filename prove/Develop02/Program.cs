@@ -22,7 +22,7 @@ class Program
         int quit = 5;
         int userChoice = -1;
 
-        string journalFileName = "journal.txt"; // global variable for file name, test with journal.txt
+        string journalFileName = "journal.txt"; // global variable, journal.txt default
 
         Entry entry1 = new Entry();  // ------ Class
         
@@ -87,7 +87,7 @@ class Program
             else if (userChoice == 3)   //--------------------------Load file :
             {
                 // Prompt user for a filename, then load the journal (a complete list of entries) from that file.
-                // This should replace any entries currently stored in memory.
+                // This should replace any entries currently stored in memory:
                 Console.Write("Enter the name of a file: ");
                 string fileNameInput = Console.ReadLine();
                 // string filename = "journal.txt" example;
@@ -96,15 +96,15 @@ class Program
                     journalFileName = fileNameInput;
                 } 
                 
-                entry1.paragraphs.Clear();
+                entry1.paragraphs.Clear(); // cleaning  the parapgraphs list and then replacing it with the entries of the new file
                 using (StreamReader sr = new StreamReader(journalFileName))
                 {
                     string line;
                     //Read and display lines from the file until the end of
                     // the file is reached.
-                    while (( line = sr.ReadLine()) != null)
+                    while (( line = sr.ReadLine()) != null) // while the line in sr in not null or empty then:
                     {
-                        entry1.paragraphs.Add(line);
+                        entry1.paragraphs.Add(line);        
                     }
                 }
             }
@@ -117,7 +117,7 @@ class Program
                 if (journalFileName != fileNameInput)
                 {
                     journalFileName = fileNameInput;
-                    using (StreamWriter outputFile = new StreamWriter(journalFileName))
+                    using (StreamWriter outputFile = new StreamWriter(journalFileName)) // StremWriter doesn't  overwrite the entries that were already in the file when loaded.
                     {
                         foreach (string entry in entry1.paragraphs)
                         {
