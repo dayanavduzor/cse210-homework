@@ -51,15 +51,13 @@ class Program
                 //Show the user a random prompt (from a list that you create), and save their response, the prompt, and the date as an Entry.
                 Random randomNumber = new Random();
                 int number = randomNumber.Next(0,6);
-                string randomPrompt = prompts[number];
+                string randomPrompt = prompts[number]; // array[index]
 
-                ////Show a random prompt from array:-------------
+                //Show a random prompt from array:-------------
                 Console.WriteLine(randomPrompt);
                 Console.Write("> ");
-                string journalEntry = Console.ReadLine(); 
-
-                ////save their response, the prompt, and the date as an Entry.
-
+                string journalEntry = Console.ReadLine();   
+                //save their response, the prompt, and the date as an Entry.
                 DateTime currentDateTime = DateTime.Now;
                 string date = currentDateTime.ToShortDateString();  //date
 
@@ -68,10 +66,7 @@ class Program
                 entry1._prompt = randomPrompt;
                 entry1._entry = journalEntry;
 
-                entry1.Add(); // to list in Entry class
-                
-                //entry1.WriteJournal(journalFileName); // function
-               
+                entry1.Add(); // to list in Entry class   
                 
             }
             else if (userChoice == 2) //--------------------------Display file:
