@@ -21,6 +21,7 @@ class Program
 
         myResume._jobs.Add(job1);
         myResume._jobs.Add(job2);
+        //Console.WriteLine(myResume._jobs[0]._jobTitle) to display title only
 
         myResume.Display();
     }
